@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="background">#FFFBF6</color>
+    <color name="top_bar">#FFF3EA</color>
+    <color name="white_cards">#000000</color>
+    <color name="cards_outlines">#F1E7DC</color>
+
+    <color name="orange_light">#FCDCC4</color>
+    <color name="orange_dark">#E2895A</color>
+    <color name="orange_medium">#E3A67C</color>
+
+    <color name="green_light">#DCEEDC</color>
+    <color name="green_dark_font">#4C7A50</color>
+
+    <color name="purple_dark_font">#A24E86</color>
+    <color name="purple_light">#F5DCEB</color>
+
+    <color name="yellow_light">#FFF3C4</color>
+    <color name="yellow_dark_font">#9C7A12</color>
+
+    <color name="text_dark">#4A3F3A</color>
+    <color name="text_light">#C9BBAF</color>
 </resources>
