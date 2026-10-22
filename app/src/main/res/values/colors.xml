@@ -3,7 +3,7 @@
     <color name="background">#FFFBF6</color>
     <color name="top_bar">#FFF3EA</color>
     <color name="white_cards">#000000</color>
-    <color name="cards_outlines">#F1E7DC</color>
+    <color name="card_outlines">#F1E7DC</color>
 
     <color name="orange_light">#FCDCC4</color>
     <color name="orange_dark">#E2895A</color>
