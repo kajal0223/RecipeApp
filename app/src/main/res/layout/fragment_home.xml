@@ -3,48 +3,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF9F5">
+    android:background="@color/background"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp"
         tools:ignore="ExtraText">
 
-        //Top Header Section: Title and Profile Badge
-        <RelativeLayout
+        <!-- Top Header Section: Title and Profile Badge -->
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
+            android:layout_height="88dp"
+            android:background="@color/top_bar"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="24dp">
 
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
+                android:layout_gravity="start|center_vertical"
                 android:text="My Recipes"
                 android:textColor="#2D2013"
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
-            //Profile Circle Badge
+            <!-- Profile Circle Badge -->
             <TextView
                 android:id="@+id/tv_profile_badge"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
+                android:layout_gravity="end|center_vertical"
                 android:background="@drawable/circle_background"
                 android:gravity="center"
                 android:textColor="#2D2013"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-        </RelativeLayout>
+        </FrameLayout>
 
-        //Placeholder for categories, filters, and recipe cards
+        <!-- Content Container with Padding -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- Placeholder for categories, filters, and recipe cards -->
+
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

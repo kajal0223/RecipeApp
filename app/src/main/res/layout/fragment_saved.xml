@@ -10,21 +10,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:orientation="vertical">
 
         <!-- Top Header Section: Title and Profile Badge -->
-        <RelativeLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp">
+            android:layout_height="88dp"
+            android:background="@color/top_bar"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="24dp">
 
             <TextView
                 android:id="@+id/tv_saved_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
+                android:layout_gravity="start|center_vertical"
                 android:text="Saved Recipes"
                 android:textColor="@color/text_dark"
                 android:textSize="28sp"
@@ -35,57 +35,64 @@
                 android:id="@+id/tv_profile_badge"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
+                android:layout_gravity="end|center_vertical"
                 android:background="@drawable/circle_background"
                 android:gravity="center"
                 android:textColor="@color/text_dark"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-        </RelativeLayout>
+        </FrameLayout>
 
-        <!-- Section Title -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="My Folders"
-            android:textColor="@color/text_dark"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <!-- Container for Dynamic Folders -->
-        <GridLayout
-            android:id="@+id/grid_folders"
+        <!-- Content Container with Padding -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="2"
-            android:columnOrderPreserved="false" />
+            android:orientation="vertical"
+            android:padding="20dp">
 
-        <!-- Empty State Message (Visible when no folders exist) -->
-        <TextView
-            android:id="@+id/tv_empty_folders"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:gravity="center"
-            android:text="No folders yet. Tap below to create one!"
-            android:textColor="@color/text_light"
-            android:textSize="14sp" />
+            <!-- Section Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="My Folders"
+                android:textColor="@color/text_dark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <!-- Add Folder Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_add_folder"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="+ Add Folder"
-            android:textAllCaps="false"
-            android:textColor="@color/text_dark"
-            app:cornerRadius="24dp"
-            app:strokeColor="@color/card_outlines" />
+            <!-- Container for Dynamic Folders -->
+            <GridLayout
+                android:id="@+id/grid_folders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:columnOrderPreserved="false" />
 
+            <!-- Empty State Message (Visible when no folders exist) -->
+            <TextView
+                android:id="@+id/tv_empty_folders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:gravity="center"
+                android:text="No folders yet. Tap below to create one!"
+                android:textColor="@color/text_light"
+                android:textSize="14sp" />
+
+            <!-- Add Folder Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_add_folder"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="+ Add Folder"
+                android:textAllCaps="false"
+                android:textColor="@color/text_dark"
+                app:cornerRadius="24dp"
+                app:strokeColor="@color/card_outlines" />
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

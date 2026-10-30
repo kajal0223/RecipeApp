@@ -10,21 +10,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:orientation="vertical">
 
         <!-- Top Header Section: Title and Profile Badge -->
-        <RelativeLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
+            android:layout_height="88dp"
+            android:background="@color/top_bar"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="24dp">
 
             <TextView
                 android:id="@+id/tv_search_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
+                android:layout_gravity="start|center_vertical"
                 android:text="Search Recipes"
                 android:textColor="@color/text_dark"
                 android:textSize="28sp"
@@ -35,60 +35,68 @@
                 android:id="@+id/tv_profile_badge"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
+                android:layout_gravity="end|center_vertical"
                 android:background="@drawable/circle_background"
                 android:gravity="center"
                 android:textColor="@color/text_dark"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-        </RelativeLayout>
+        </FrameLayout>
 
-        <!-- Search Bar -->
-        <EditText
-            android:id="@+id/et_search_bar"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/search_bar_background"
-            android:drawableStart="@drawable/ic_search"
-            android:drawablePadding="12dp"
-            android:hint="Search by recipe name..."
-            android:paddingHorizontal="16dp"
-            android:textColor="@color/text_dark"
-            android:textColorHint="@color/text_light"
-            android:textSize="14sp" />
-
-        <!-- In Your Kitchen Section -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:text="IN YOUR KITCHEN"
-            android:textColor="@color/text_light"
-            android:textSize="12sp"
-            android:textStyle="bold" />
-
-        <!-- Dynamic Container for User Ingredients -->
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/cg_pantry_ingredients"
+        <!-- Content Container with Padding -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:chipSpacingHorizontal="8dp"
-            app:chipSpacingVertical="4dp">
+            android:orientation="vertical"
+            android:padding="20dp">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_add_ingredient"
-                style="@style/Widget.MaterialComponents.Chip.Action"
+            <!-- Search Bar -->
+            <EditText
+                android:id="@+id/et_search_bar"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/search_bar_background"
+                android:drawableStart="@drawable/ic_search"
+                android:drawablePadding="12dp"
+                android:hint="Search by recipe name..."
+                android:paddingHorizontal="16dp"
+                android:textColor="@color/text_dark"
+                android:textColorHint="@color/text_light"
+                android:textSize="14sp" />
+
+            <!-- In Your Kitchen Section -->
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+ Add Ingredient"
-                android:textColor="@color/text_dark"
-                app:chipBackgroundColor="@color/card_outlines"
-                app:chipStrokeWidth="0dp" />
+                android:layout_marginBottom="12dp"
+                android:text="IN YOUR KITCHEN"
+                android:textColor="@color/text_light"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
-        </com.google.android.material.chip.ChipGroup>
+            <!-- Dynamic Container for User Ingredients / Add Button -->
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/cg_pantry_ingredients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:chipSpacingHorizontal="8dp"
+                app:chipSpacingVertical="4dp">
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/chip_add_ingredient"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+ Add Ingredient"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_dark"
+                    app:cornerRadius="24dp"
+                    app:strokeColor="@color/card_outlines" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
