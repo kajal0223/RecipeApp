@@ -20,4 +20,6 @@
 
     <color name="text_dark">#4A3F3A</color>
     <color name="text_light">#C9BBAF</color>
+
+    <color name="nav_item_color">@color/orange_dark</color>
 </resources>
