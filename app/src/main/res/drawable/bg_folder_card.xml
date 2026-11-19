@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Upper-right folder tab -->
+    <item
+        android:top="0dp"
+        android:right="0dp"
+        android:left="64dp"
+        android:bottom="112dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/orange_medium" />
+            <corners
+                android:topLeftRadius="14dp"
+                android:topRightRadius="10dp"
+                android:bottomLeftRadius="0dp"
+                android:bottomRightRadius="0dp" />
+        </shape>
+    </item>
+
+    <!-- Main folder body -->
+    <item android:top="10dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/orange_medium" />
+            <corners
+                android:topLeftRadius="14dp"
+                android:topRightRadius="12dp"
+                android:bottomLeftRadius="4dp"
+                android:bottomRightRadius="4dp" />
+        </shape>
+    </item>
+
+</layer-list>
