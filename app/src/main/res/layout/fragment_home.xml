@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -51,7 +52,153 @@
             android:orientation="vertical"
             android:padding="20dp">
 
-            <!-- Placeholder for categories, filters, and recipe cards -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:text="CATEGORY"
+                android:textColor="@color/text_light"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/row_categories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_cat_all"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="All"
+                    android:textAllCaps="false"
+                    android:textColor="@color/orange_dark"
+                    app:backgroundTint="@color/orange_light"
+                    app:cornerRadius="20dp"
+                    app:elevation="0dp" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_cat_breakfast"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Breakfast"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_light"
+                    app:cornerRadius="20dp"
+                    app:strokeColor="@color/card_outlines" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_cat_lunch"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lunch"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_light"
+                    app:cornerRadius="20dp"
+                    app:strokeColor="@color/card_outlines" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_cat_dinner"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dinner"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_light"
+                    app:cornerRadius="20dp"
+                    app:strokeColor="@color/card_outlines" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_cat_dessert"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dessert"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_light"
+                    app:cornerRadius="20dp"
+                    app:strokeColor="@color/card_outlines" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:text="PREP TIME"
+                android:textColor="@color/text_light"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/row_prep_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_prep_any"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Any time"
+                    android:textAllCaps="false"
+                    android:textColor="@color/green_dark_font"
+                    app:backgroundTint="@color/green_light"
+                    app:cornerRadius="20dp"
+                    app:elevation="0dp" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_prep_under15"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Under 15"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_light"
+                    app:cornerRadius="20dp"
+                    app:strokeColor="@color/card_outlines" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_prep_15_30"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="15 - 30"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_light"
+                    app:cornerRadius="20dp"
+                    app:strokeColor="@color/card_outlines" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_prep_30plus"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30+ min"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_light"
+                    app:cornerRadius="20dp"
+                    app:strokeColor="@color/card_outlines" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
 
         </LinearLayout>
 
