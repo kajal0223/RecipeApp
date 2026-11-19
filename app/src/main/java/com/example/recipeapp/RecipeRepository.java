@@ -177,4 +177,30 @@ public class RecipeRepository {
             }
         }
     }
+
+    //Renames existing folder if non-blank and not already used by another folder
+    public boolean renameFolder(Folder folder, String rawNewName) {
+        if (folder == null || rawNewName == null) {
+            return false;
+        }
+        String trimmed = rawNewName.trim();
+        if (trimmed.isEmpty()) {
+            return false;
+        }
+        for (Folder existing : folders) {
+            if (existing != folder && existing.getName().equalsIgnoreCase(trimmed)) {
+                return false;
+            }
+        }
+        folder.setName(trimmed);
+        return true;
+    }
+
+    //Deletes folder from repository
+    public void deleteFolder(Folder folder) {
+        if (folder == null) {
+            return;
+        }
+        folders.remove(folder);
+    }
 }

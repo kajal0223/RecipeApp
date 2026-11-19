@@ -69,6 +69,17 @@
                 android:columnCount="2"
                 android:columnOrderPreserved="false" />
 
+            <!-- Folder Hint -->
+            <TextView
+                android:id="@+id/tv_folder_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Tap a folder to view recipes · Long-press to edit or delete."
+                android:textColor="@color/text_light"
+                android:textSize="12sp"
+                android:visibility="gone" />
+
             <!-- Empty State Message (Visible when no folders exist) -->
             <TextView
                 android:id="@+id/tv_empty_folders"
