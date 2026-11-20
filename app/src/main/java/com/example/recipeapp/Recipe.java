@@ -18,10 +18,19 @@ public class Recipe {
     private final List<String> ingredientNames;
     private final List<String> instructions;
     private final String notes;
+    private String imageUri; // Optional persisted URI string from gallery picker
 
     //Initializes recipe fields and normalizes ingredient names and optional lists
     public Recipe(String id, String title, String category, int prepTimeMinutes,
                   int servings, int imageResId, boolean favorite,
+                  List<String> ingredientNames, List<String> instructions, String notes) {
+        this(id, title, category, prepTimeMinutes, servings, imageResId, "",
+                favorite, ingredientNames, instructions, notes);
+    }
+
+    //Overloaded constructor supporting a persisted recipe image URI string
+    public Recipe(String id, String title, String category, int prepTimeMinutes,
+                  int servings, int imageResId, String imageUri, boolean favorite,
                   List<String> ingredientNames, List<String> instructions, String notes) {
         this.id = id;
         this.title = title;
@@ -29,6 +38,7 @@ public class Recipe {
         this.prepTimeMinutes = prepTimeMinutes;
         this.servings = servings;
         this.imageResId = imageResId;
+        this.imageUri = imageUri != null ? imageUri : "";
         this.favorite = favorite;
         this.ingredientNames = normalizeList(ingredientNames);
         this.instructions = instructions != null ? instructions : new ArrayList<>();
@@ -81,8 +91,18 @@ public class Recipe {
 
     public String formatIngredientMatchText(Set<String> selectedIngredients) {
         int matched = countMatchingIngredients(selectedIngredients);
-        int total = ingredientNames.size();
-        return "Uses " + matched + "/" + total + " selected ingredients";
+        int selectedCount = 0;
+        if (selectedIngredients != null) {
+            Set<String> normalizedSelected = new HashSet<>();
+            for (String item : selectedIngredients) {
+                String normalized = normalizeIngredient(item);
+                if (!normalized.isEmpty()) {
+                    normalizedSelected.add(normalized);
+                }
+            }
+            selectedCount = normalizedSelected.size();
+        }
+        return "Uses " + matched + "/" + selectedCount + " selected ingredients";
     }
 
     //Checks whether recipe title matches search query
@@ -103,6 +123,8 @@ public class Recipe {
     public int getPrepTimeMinutes() { return prepTimeMinutes; }
     public int getServings() { return servings; }
     public int getImageResId() { return imageResId; }
+    public String getImageUri() { return imageUri != null ? imageUri : ""; }
+    public void setImageUri(String imageUri) { this.imageUri = imageUri != null ? imageUri : ""; }
     public boolean isFavorite() { return favorite; }
     public void setFavorite(boolean favorite) { this.favorite = favorite; }
     public List<String> getIngredientNames() { return ingredientNames; }

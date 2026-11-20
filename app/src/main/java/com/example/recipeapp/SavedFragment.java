@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,18 +15,30 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 
-//Fragment displaying 2-column folder cards and handling folder creation, renaming, and deletion
+//Fragment displaying 2-column folder cards, folder recipe lists, and folder CRUD actions
 public class SavedFragment extends Fragment {
 
+    private View layoutFoldersView;
     private GridLayout gridFolders;
     private TextView tvFolderHint;
     private TextView tvEmptyFolders;
     private MaterialButton btnAddFolder;
+
+    private View layoutFolderDetailView;
+    private TextView tvSelectedFolderTitle;
+    private TextView tvFolderEmpty;
+    private RecyclerView rvFolderRecipes;
+    private FolderRecipesAdapter folderRecipesAdapter;
+
+    @Nullable
+    private String selectedFolderId = null;
 
     private RecipeRepository repository;
 
@@ -43,23 +56,117 @@ public class SavedFragment extends Fragment {
         repository = RecipeRepository.getInstance();
         repository.init(requireContext());
 
+        layoutFoldersView = view.findViewById(R.id.layout_folders_view);
         gridFolders = view.findViewById(R.id.grid_folders);
         tvFolderHint = view.findViewById(R.id.tv_folder_hint);
         tvEmptyFolders = view.findViewById(R.id.tv_empty_folders);
         btnAddFolder = view.findViewById(R.id.btn_add_folder);
 
+        layoutFolderDetailView = view.findViewById(R.id.layout_folder_detail_view);
+        tvSelectedFolderTitle = view.findViewById(R.id.tv_selected_folder_title);
+        tvFolderEmpty = view.findViewById(R.id.tv_folder_empty);
+        rvFolderRecipes = view.findViewById(R.id.rv_folder_recipes);
+
         btnAddFolder.setOnClickListener(v -> showCreateFolderDialog());
 
-        refreshFolders();
+        ImageButton btnBackToFolders = view.findViewById(R.id.btn_back_to_folders);
+        if (btnBackToFolders != null) {
+            btnBackToFolders.setOnClickListener(v -> showFoldersGrid());
+        }
+
+        rvFolderRecipes.setLayoutManager(new LinearLayoutManager(requireContext()));
+        folderRecipesAdapter = new FolderRecipesAdapter(new FolderRecipesAdapter.OnFolderRecipeListener() {
+            @Override
+            public void onRecipeClick(Recipe recipe) {
+                Toast.makeText(requireContext(), recipe.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFavoriteClick(Recipe recipe) {
+                repository.toggleFavorite(recipe);
+                refreshAll();
+            }
+        });
+        rvFolderRecipes.setAdapter(folderRecipesAdapter);
+
+        refreshAll();
     }
 
-    //Refreshes folder cards and counts when returning to Saved Recipes
+    //Refreshes folder cards and open folder recipes when returning to Saved Recipes
     @Override
     public void onResume() {
         super.onResume();
         if (repository != null) {
-            refreshFolders();
+            refreshAll();
         }
+    }
+
+    private void refreshAll() {
+        refreshFolders();
+        if (selectedFolderId != null) {
+            renderSelectedFolder();
+        } else {
+            showFoldersGrid();
+        }
+    }
+
+    private void openFolder(Folder folder) {
+        if (folder == null) {
+            return;
+        }
+        selectedFolderId = folder.getId();
+        renderSelectedFolder();
+    }
+
+    private void showFoldersGrid() {
+        selectedFolderId = null;
+        if (layoutFolderDetailView != null) {
+            layoutFolderDetailView.setVisibility(View.GONE);
+        }
+        if (layoutFoldersView != null) {
+            layoutFoldersView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Nullable
+    private Folder findSelectedFolder() {
+        if (selectedFolderId == null || repository == null) {
+            return null;
+        }
+        for (Folder folder : repository.getFolders()) {
+            if (selectedFolderId.equals(folder.getId())) {
+                return folder;
+            }
+        }
+        return null;
+    }
+
+    private void renderSelectedFolder() {
+        Folder activeFolder = findSelectedFolder();
+        if (activeFolder == null) {
+            showFoldersGrid();
+            return;
+        }
+
+        if (layoutFoldersView != null) {
+            layoutFoldersView.setVisibility(View.GONE);
+        }
+        if (layoutFolderDetailView != null) {
+            layoutFolderDetailView.setVisibility(View.VISIBLE);
+        }
+
+        List<Recipe> folderRecipes = repository.getRecipesInFolder(activeFolder);
+        int count = folderRecipes.size();
+        String unit = count == 1 ? "recipe" : "recipes";
+        if (tvSelectedFolderTitle != null) {
+            tvSelectedFolderTitle.setText(activeFolder.getName() + " (" + count + " " + unit + ")");
+        }
+
+        folderRecipesAdapter.submitList(folderRecipes);
+        if (tvFolderEmpty != null) {
+            tvFolderEmpty.setVisibility(count == 0 ? View.VISIBLE : View.GONE);
+        }
+        rvFolderRecipes.setVisibility(count == 0 ? View.GONE : View.VISIBLE);
     }
 
     //Prompts for folder name and creates it if non-blank and unique
@@ -144,8 +251,11 @@ public class SavedFragment extends Fragment {
                 .setTitle("Delete Folder")
                 .setMessage("Delete \"" + folder.getName() + "\"? Saved recipes themselves won't be deleted.")
                 .setPositiveButton("Delete", (dialog, which) -> {
+                    if (folder.getId().equals(selectedFolderId)) {
+                        selectedFolderId = null;
+                    }
                     repository.deleteFolder(folder);
-                    refreshFolders();
+                    refreshAll();
                     Toast.makeText(
                             requireContext(),
                             "Deleted \"" + folder.getName() + "\"",
@@ -231,14 +341,7 @@ public class SavedFragment extends Fragment {
         tvFolderName.setText(folder.getName());
         tvFolderCount.setText(folder.getRecipeCountLabel());
 
-        cardView.setOnClickListener(v -> {
-            List<Recipe> folderRecipes = repository.getRecipesInFolder(folder);
-            Toast.makeText(
-                    requireContext(),
-                    folder.getName() + " (" + folderRecipes.size() + ")",
-                    Toast.LENGTH_SHORT
-            ).show();
-        });
+        cardView.setOnClickListener(v -> openFolder(folder));
 
         cardView.setOnLongClickListener(v -> {
             showFolderOptionsDialog(folder);
