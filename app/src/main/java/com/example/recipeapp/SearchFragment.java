@@ -51,6 +51,7 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         repository = RecipeRepository.getInstance();
+        repository.init(requireContext());
 
         etSearchBar = view.findViewById(R.id.et_search_bar);
         cgPantryIngredients = view.findViewById(R.id.cg_pantry_ingredients);
@@ -127,6 +128,9 @@ public class SearchFragment extends Fragment {
     }
 
     private void showRemoveIngredientDialog(String ingredient) {
+        if (ingredient == null || ingredient.isEmpty()) {
+            return;
+        }
         String formatted = ingredient.substring(0, 1).toUpperCase(Locale.US) + ingredient.substring(1);
 
         new AlertDialog.Builder(requireContext())
@@ -151,6 +155,9 @@ public class SearchFragment extends Fragment {
 
         List<String> ingredients = repository.getKitchenIngredients();
         for (String ingredient : ingredients) {
+            if (ingredient == null || ingredient.isEmpty()) {
+                continue;
+            }
             Chip chip = new Chip(requireContext());
             String formatted = ingredient.substring(0, 1).toUpperCase(Locale.US) + ingredient.substring(1);
             chip.setText("+ " + formatted);
