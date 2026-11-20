@@ -41,6 +41,7 @@ public class SavedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         repository = RecipeRepository.getInstance();
+        repository.init(requireContext());
 
         gridFolders = view.findViewById(R.id.grid_folders);
         tvFolderHint = view.findViewById(R.id.tv_folder_hint);

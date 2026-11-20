@@ -25,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        //Initialize shared persistence layer before loading fragments
+        RecipeRepository.getInstance().init(getApplicationContext());
+
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
 
         //Load HomeFragment by default when app launches
