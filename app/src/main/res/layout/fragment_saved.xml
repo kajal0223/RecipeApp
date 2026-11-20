@@ -51,58 +51,120 @@
             android:orientation="vertical"
             android:padding="20dp">
 
-            <!-- Section Title -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:text="My Folders"
-                android:textColor="@color/text_dark"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <!-- Container for Dynamic Folders -->
-            <GridLayout
-                android:id="@+id/grid_folders"
+            <!-- Folders Grid View -->
+            <LinearLayout
+                android:id="@+id/layout_folders_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:columnCount="2"
-                android:columnOrderPreserved="false" />
+                android:orientation="vertical">
 
-            <!-- Folder Hint -->
-            <TextView
-                android:id="@+id/tv_folder_hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Tap a folder to view recipes · Long-press to edit or delete."
-                android:textColor="@color/text_light"
-                android:textSize="12sp"
-                android:visibility="gone" />
+                <!-- Section Title -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="My Folders"
+                    android:textColor="@color/text_dark"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-            <!-- Empty State Message (Visible when no folders exist) -->
-            <TextView
-                android:id="@+id/tv_empty_folders"
+                <!-- Container for Dynamic Folders -->
+                <GridLayout
+                    android:id="@+id/grid_folders"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="2"
+                    android:columnOrderPreserved="false" />
+
+                <!-- Folder Hint -->
+                <TextView
+                    android:id="@+id/tv_folder_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Tap a folder to view recipes · Long-press to edit or delete."
+                    android:textColor="@color/text_light"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+
+                <!-- Empty State Message (Visible when no folders exist) -->
+                <TextView
+                    android:id="@+id/tv_empty_folders"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:gravity="center"
+                    android:text="No folders yet. Tap below to create one!"
+                    android:textColor="@color/text_light"
+                    android:textSize="14sp" />
+
+                <!-- Add Folder Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_add_folder"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="+ Add Folder"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_dark"
+                    app:cornerRadius="24dp"
+                    app:strokeColor="@color/card_outlines" />
+
+            </LinearLayout>
+
+            <!-- Selected Folder Recipes View -->
+            <LinearLayout
+                android:id="@+id/layout_folder_detail_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:gravity="center"
-                android:text="No folders yet. Tap below to create one!"
-                android:textColor="@color/text_light"
-                android:textSize="14sp" />
+                android:orientation="vertical"
+                android:visibility="gone">
 
-            <!-- Add Folder Button -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_add_folder"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="+ Add Folder"
-                android:textAllCaps="false"
-                android:textColor="@color/text_dark"
-                app:cornerRadius="24dp"
-                app:strokeColor="@color/card_outlines" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/btn_back_to_folders"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="Back to folders"
+                        android:src="@drawable/ic_chevron_left" />
+
+                    <TextView
+                        android:id="@+id/tv_selected_folder_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/text_dark"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_folder_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:gravity="center"
+                    android:text="No recipes in this folder yet."
+                    android:textColor="@color/text_light"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_folder_recipes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

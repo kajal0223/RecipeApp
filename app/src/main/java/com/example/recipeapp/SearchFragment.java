@@ -28,7 +28,6 @@ import java.util.Locale;
 public class SearchFragment extends Fragment {
 
     private EditText etSearchBar;
-    private TextView tvKitchenLabel;
     private ChipGroup cgPantryIngredients;
     private MaterialButton chipAddIngredient;
     private TextView tvResultsHeader;
@@ -115,13 +114,24 @@ public class SearchFragment extends Fragment {
                 .setView(input)
                 .setPositiveButton("Add", (dialog, which) -> {
                     String raw = input.getText().toString();
-                    if (!repository.addKitchenIngredient(raw)) {
+                    String[] parts = raw.split("[,\\n]");
+                    int addedCount = 0;
+                    for (String part : parts) {
+                        if (repository.addKitchenIngredient(part)) {
+                            addedCount++;
+                        }
+                    }
+                    if (addedCount == 0) {
                         Toast.makeText(requireContext(), "Enter an ingredient name", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     renderIngredientChips();
                     refreshResults();
-                    Toast.makeText(requireContext(), "Added ingredient", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                            requireContext(),
+                            addedCount == 1 ? "Added ingredient" : "Added " + addedCount + " ingredients",
+                            Toast.LENGTH_SHORT
+                    ).show();
                 })
                 .setNegativeButton("Cancel", null)
                 .show();

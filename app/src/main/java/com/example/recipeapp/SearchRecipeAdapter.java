@@ -1,5 +1,6 @@
 package com.example.recipeapp;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,7 @@ public class SearchRecipeAdapter extends RecyclerView.Adapter<SearchRecipeAdapte
     @Override
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_search_recipe, parent, false);
+                .inflate(R.layout.item_recipe_card, parent, false);
         return new RecipeViewHolder(view);
     }
 
@@ -78,27 +79,27 @@ public class SearchRecipeAdapter extends RecyclerView.Adapter<SearchRecipeAdapte
             super(itemView);
             ivThumb = itemView.findViewById(R.id.iv_recipe_thumb);
             tvTitle = itemView.findViewById(R.id.tv_recipe_title);
-            tvIngredientMatch = itemView.findViewById(R.id.tv_ingredient_match);
+            tvIngredientMatch = itemView.findViewById(R.id.tv_recipe_subtitle);
             tvCategory = itemView.findViewById(R.id.tv_recipe_category);
             tvPrepTime = itemView.findViewById(R.id.tv_recipe_prep_time);
-            btnFavorite = itemView.findViewById(R.id.btn_favorite);
+            btnFavorite = itemView.findViewById(R.id.btn_favorite_heart);
         }
 
         void bind(Recipe recipe, Set<String> selectedIngredients, boolean isSearchingByName,
                   OnRecipeActionListener listener) {
             tvTitle.setText(recipe.getTitle());
 
-            if (recipe.getImageResId() != 0) {
-                ivThumb.setImageResource(recipe.getImageResId());
-            } else {
-                ivThumb.setImageResource(R.drawable.ic_search);
-            }
+            bindThumbnail(ivThumb, recipe);
 
             if (!isSearchingByName) {
                 tvIngredientMatch.setVisibility(View.VISIBLE);
                 tvIngredientMatch.setText(recipe.formatIngredientMatchText(selectedIngredients));
             } else {
-                tvIngredientMatch.setVisibility(View.GONE);
+                List<String> ings = recipe.getIngredientNames();
+                tvIngredientMatch.setVisibility(View.VISIBLE);
+                tvIngredientMatch.setText(ings.isEmpty()
+                        ? "No ingredients listed"
+                        : "Ingredients: " + joinComma(ings));
             }
 
             String category = recipe.getCategory();
@@ -112,9 +113,11 @@ public class SearchRecipeAdapter extends RecyclerView.Adapter<SearchRecipeAdapte
             tvPrepTime.setText(recipe.getPrepTimeMinutes() + " min");
 
             if (recipe.isFavorite()) {
-                btnFavorite.setImageResource(android.R.drawable.btn_star_big_on);
+                btnFavorite.setImageResource(R.drawable.ic_heart_filled);
+                btnFavorite.setColorFilter(itemView.getContext().getColor(R.color.orange_dark));
             } else {
-                btnFavorite.setImageResource(android.R.drawable.btn_star_big_off);
+                btnFavorite.setImageResource(R.drawable.ic_heart_outline);
+                btnFavorite.setColorFilter(itemView.getContext().getColor(R.color.text_light));
             }
 
             itemView.setOnClickListener(v -> {
@@ -128,6 +131,34 @@ public class SearchRecipeAdapter extends RecyclerView.Adapter<SearchRecipeAdapte
                     listener.onFavoriteClick(recipe);
                 }
             });
+        }
+
+        private static String joinComma(List<String> items) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < items.size(); i++) {
+                if (i > 0) {
+                    sb.append(", ");
+                }
+                sb.append(items.get(i));
+            }
+            return sb.toString();
+        }
+
+        private static void bindThumbnail(ImageView imageView, Recipe recipe) {
+            String uriStr = recipe.getImageUri();
+            if (uriStr != null && !uriStr.isEmpty()) {
+                try {
+                    imageView.setImageURI(Uri.parse(uriStr));
+                    return;
+                } catch (Exception ignored) {
+                }
+            }
+            imageView.setImageURI(null);
+            if (recipe.getImageResId() != 0) {
+                imageView.setImageResource(recipe.getImageResId());
+            } else {
+                imageView.setImageResource(android.R.drawable.ic_menu_gallery);
+            }
         }
     }
 }
